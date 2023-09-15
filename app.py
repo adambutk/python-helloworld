@@ -1,7 +1,6 @@
 from flask import Flask
 from flask import json
 import logging
-import os
 
 app = Flask(__name__)
 
@@ -9,11 +8,11 @@ app = Flask(__name__)
 @app.route('/status')
 def healthcheck():
     response = app.response_class(
-            response=json.dumps({"result": "OK - healthy"}),
-            status=200,
-            mimetype='application/json'
+        response=json.dumps({"result": "OK - healthy"}),
+        status=200,
+        mimetype='application/json'
     )
-    app.logger.info('Status request successful')
+    app.logger.info('Status request successfull')
     app.logger.debug('DEBUG message')
     return response
 
@@ -21,24 +20,23 @@ def healthcheck():
 @app.route('/metrics')
 def metrics():
     response = app.response_class(
-            response=json.dumps({"status": "success",
-                                 "code": 0, "data": {"UserCount": 140, "UserCountActive": 23}}),
-            status=200,
-            mimetype='application/json'
+        response=json.dumps({"status": "success", "code": 0, "data": {"UserCount": 140, "UserCountActive": 23}}),
+        status=200,
+        mimetype='application/json'
     )
-    app.logger.info('Metrics request successful')
+    app.logger.info('Metrics request successfull')
     return response
 
 
 @app.route("/")
 def hello():
-    app.logger.info('Main request successful')
+    app.logger.info('Main request successfull')
 
     return "Hello World!"
 
 
 if __name__ == "__main__":
-    # stream logs to a file
+    ## stream logs to a file
     logging.basicConfig(filename='app.log', level=logging.DEBUG)
-    
-    app.run(host='0.0.0.0', port=int(os.getenv('PORT', 4444)))
+
+    app.run(host='0.0.0.0')
